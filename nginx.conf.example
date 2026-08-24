@@ -1,0 +1,20 @@
+# Add inside the relevant server block.
+location /tuhimunatanga-v3-standalone/ {
+    try_files $uri $uri/ /tuhimunatanga-v3-standalone/index.php?$query_string;
+}
+
+location ~ ^/tuhimunatanga-v3-standalone/(?:raraunga|bin|tests)(?:/|$) {
+    deny all;
+    return 404;
+}
+
+location ~* ^/tuhimunatanga-v3-standalone/.*\.(?:ini|db|sha256|sql|md|lock|log)$ {
+    deny all;
+    return 404;
+}
+
+location ~ ^/tuhimunatanga-v3-standalone/.+\.php$ {
+    include fastcgi_params;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    fastcgi_pass unix:/run/php/php-fpm.sock;
+}

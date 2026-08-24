@@ -1,0 +1,11 @@
+{
+  "token": "Ab3De5Gh7Jk9MnP",
+  "passphrase": "āio aroha awa kāinga kupu mana mātauranga moana mokopuna noho ora pāpā rangi reo tangata tapu tikanga wai waka whenua",
+  "payload": {
+    "type": "TUHIMUNATANGA-RICH-HTML",
+    "version": 1,
+    "html": "<p>Profile 1 compatibility fixture: whakamātautau.</p>",
+    "delete_secret": null
+  },
+  "envelope": "{\"v\":3,\"alg\":\"AES-256-GCM\",\"kdf\":\"PBKDF2-SHA-256\",\"iter\":600000,\"salt\":\"Yjz2aNpX7mwVJzDFyhRiqw\",\"iv\":\"XvxoNSpbZ3P7Hwe3\",\"ct\":\"k-TaEfRPGaODVZko7MuR6dVg14E8L9B7XBZreP8lC2A4FlvWEFYQ5Gx8IYXPuLWDa7BqvJ4M29eifD0aSbtJW5dkZzmRSh2lJre7q02EcCTNKkZzxHXPRxlgRjTb3l6v3VmZReZ1JOfAZHi9Vn0AbqM0mPBOM4YUDlS40Ko-9zNKGq8D_BiR7hhcwaQmkQGyz7UMAs2t2GEuNibCO53cjbIfNEbNV0AI0EXuuu8AcmLEyGpFFXLt1mvssD_L72WGtQ2t93lug3zP45pBvrazOOqvMIAUmtjASWOJEP-vFkHH9lMVNvEizOhIROPs2pAZaeVps--y3PMHFjJ_q_XZd4Khdij9tcIBLZvmOyb538g\"}"
+}

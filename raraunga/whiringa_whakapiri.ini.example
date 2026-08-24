@@ -1,0 +1,14 @@
+; Tuhimunatanga v3 standalone configuration.
+; Replace every CHANGE_ME value before deployment.
+
+raraunga_waahitau_tukutuku = "127.0.0.1"
+tauranga = "3306"
+ingoa_raraunga = "CHANGE_ME_DATABASE"
+ingoa = "CHANGE_ME_USER"
+kupuhipa = "CHANGE_ME_PASSWORD"
+kii_taupaanga = "CHANGE_ME_64_HEX_CHARACTER_APPLICATION_KEY"
+papa_hononga = "https://example.com/tuhimunatanga-v3/"
+rohe_waa = "Pacific/Auckland"
+
+; Set to 1 temporarily to show the failing server stage and exception.
+patuiro = "0"

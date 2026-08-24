@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Tuhimunatanga v3.1.2 interface preview</title>
+	<link rel="stylesheet" href="../kaahua.css">
+</head>
+<body>
+<header class="pae-runga">
+	<div class="takai pane">
+		<a class="waitohu" href="#">
+			<span class="waitohu-tohu" aria-hidden="true"><svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="27"></circle><path d="M43 18c-12-2-23 7-23 19 0 8 6 14 14 14 7 0 12-5 12-11 0-6-5-10-10-10-5 0-8 4-8 8 0 3 2 6 5 7"></path><path d="M20 24c7 1 13 5 16 11"></path></svg></span>
+			<span class="waitohu-kupu"><strong>Tuhimunatanga</strong><small>Private by design. Encrypted in your browser.</small></span>
+		</a>
+		<div class="pane-whakapono"><span class="tohu-whakapono">Client-side encryption</span><span class="tohu-whakapono">Ciphertext storage</span></div>
+	</div>
+</header>
+<main class="takai">
+	<section class="wharangi-upoko">
+		<div><p class="kupu-runga">Tuhimunatanga v3.1.2</p><h1>Create a secure paste</h1><p>Encrypt formatted content in this browser. The server receives an authenticated encrypted envelope, never the plaintext or passphrase during normal operation.</p></div>
+		<a class="hononga-awhina" href="#">ⓘ How it works</a>
+	</section>
+	<section class="whakataki">
+		<div class="whakataki-take"><span class="whakataki-tohu">1</span><div><strong>Encrypt locally</strong><span>AES-256-GCM encryption occurs in this browser.</span></div></div>
+		<div class="whakataki-take"><span class="whakataki-tohu">2</span><div><strong>Store ciphertext</strong><span>PHP stores the envelope, expiry rule and lookup metadata.</span></div></div>
+		<div class="whakataki-take"><span class="whakataki-tohu">3</span><div><strong>Decrypt locally</strong><span>The recipient enters the Māori Diceware passphrase in their browser.</span></div></div>
+	</section>
+	<section class="kaari kupuhipa-whakarite">
+		<div class="pane-kupuhipa">
+			<div class="upoko-kaari"><span class="upoko-kaari-tohu">◆</span><div><h2>Your encryption passphrase</h2><p>Generated in this browser. Save this passphrase now and keep it separate from the secure link.</p></div></div>
+			<button class="patene-tuarua patene-iti patene-hou">Generate another</button>
+		</div>
+		<div class="kupuhipa-kaha">
+			<div class="kupuhipa-whiriwhiri"><label>Passphrase length</label><select><option selected>22 words</option></select><p>Choose a shorter passphrase for convenience or 22 words to reach the post-quantum strength target.</p></div>
+			<div class="kupuhipa-kaha-whakarāpopoto"><span class="tohu-kaha" data-kaha="quantum">Post-quantum target reached</span><strong>22 words · 256.00-bit effective key strength</strong></div>
+			<div class="kupuhipa-pangarau"><span>Ideal Diceware entropy: 22 × log₂(7,776) = 284.35 bits</span><span>Conservative displayed-word entropy: 22 × log₂(7,776 ÷ 2) = 262.35 bits</span><span>Effective AES-256 ceiling: min(262.35, 256) = 256.00 bits</span><span>Simplified quantum-search estimate: 256.00 ÷ 2 = 128.00 bits</span></div>
+			<p class="kupuhipa-kaha-kupu">The quantum figure uses a simplified square-root search model and is a strength target, not a guarantee against a compromised browser or server-supplied JavaScript.</p>
+		</div>
+		<div class="kupuhipa-kari">
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">11111</span><span class="kupuhipa-kupu-matua">ae</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">44216</span><span class="kupuhipa-kupu-matua">pīnohinohi</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">44613</span><span class="kupuhipa-kupu-matua">pōkahu</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">45645</span><span class="kupuhipa-kupu-matua">pūkane</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">12351</span><span class="kupuhipa-kupu-matua">ahakoa</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">23516</span><span class="kupuhipa-kupu-matua">whakaaro</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">31422</span><span class="kupuhipa-kupu-matua">mahuri</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">46231</span><span class="kupuhipa-kupu-matua">taiaha</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">52146</span><span class="kupuhipa-kupu-matua">kōkari</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">63125</span><span class="kupuhipa-kupu-matua">mātauranga</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">14625</span><span class="kupuhipa-kupu-matua">rangatahi</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">25634</span><span class="kupuhipa-kupu-matua">mokopuna</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">36541</span><span class="kupuhipa-kupu-matua">atawhai</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">41563</span><span class="kupuhipa-kupu-matua">manawanui</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">52314</span><span class="kupuhipa-kupu-matua">whakapapa</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">64152</span><span class="kupuhipa-kupu-matua">aroha</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">15324</span><span class="kupuhipa-kupu-matua">hīkoi</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">26345</span><span class="kupuhipa-kupu-matua">wānanga</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">35416</span><span class="kupuhipa-kupu-matua">mauri</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">42651</span><span class="kupuhipa-kupu-matua">kaitiaki</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">53624</span><span class="kupuhipa-kupu-matua">tūrangawaewae</span></span>
+			<span class="kupuhipa-kupu"><span class="kupuhipa-waehere">61543</span><span class="kupuhipa-kupu-matua">whenua</span></span>
+		</div>
+		<div class="kupuhipa-raro">
+			<div class="raina-patene kupuhipa-patene"><button class="patene-matua">Copy passphrase</button><button class="patene-tuarua">Copy passphrase + codes</button></div>
+			<div class="kupuhipa-whakamaumahara"><p><strong>Store this passphrase safely.</strong><span>Without it, the encrypted content cannot be recovered.</span></p></div>
+		</div>
+	</section>
+	<section class="kaari etita-kaari">
+		<div class="upoko-kaari etita-upoko"><span class="upoko-kaari-tohu">▤</span><div><h2>Content to encrypt</h2><p>Paste formatted text from Word or another document. Tables, colours and supported formatting are retained.</p></div></div>
+		<div class="etita-whaihanga" contenteditable="true" data-placeholder="Paste formatted text from Word or another document here"></div>
+	</section>
+	<section class="kaari tautuhinga-kaari"><div class="tautuhinga-matapihi"><div class="tautuhinga-āpure"><label>Expiry rule</label><select><option>Choose an expiry rule</option></select></div><div class="tautuhinga-whakamārama"><strong>Before you encrypt</strong><span>Save the passphrase separately. The secure link alone cannot decrypt the paste.</span></div><button class="patene-whakamuna">Encrypt in browser</button></div></section>
+</main>
+<footer><div class="takai waewae"><p><strong>Tuhimunatanga v3.1.2</strong></p><p>Standalone browser-encrypted paste service.</p></div></footer>
+</body>
+</html>

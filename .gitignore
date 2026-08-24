@@ -1,0 +1,43 @@
+# Secrets and machine-local configuration
+/raraunga/whiringa_whakapiri.ini
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Runtime and generated output
+*.log
+*.pid
+*.tmp
+*.cache
+*.bak
+*.old
+*.orig
+SHA256SUMS.txt
+coverage/
+.nyc_output/
+.phpunit.cache/
+.phpunit.result.cache
+
+# Dependencies
+node_modules/
+vendor/
+
+# Editors and operating systems
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Local release archives
+*.zip
+*.tar
+*.tar.gz
+*.tgz

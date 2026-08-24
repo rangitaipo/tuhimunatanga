@@ -1,0 +1,17 @@
+{
+  "token": "Ab3De5Gh7Jk9MnPq2St4Vx",
+  "passphrase": "āio aroha awa kāinga kupu mana mātauranga moana mokopuna noho ora pāpā rangi reo tangata tapu tikanga wai waka whenua whare wairua",
+  "policy": {
+    "expiry_rule": "604800",
+    "one_time": false
+  },
+  "payload": {
+    "type": "TUHIMUNATANGA-RICH-HTML",
+    "version": 2,
+    "html": "<p>Profile 2 known-answer fixture: whakamātautau.</p>",
+    "expiry_rule": "604800",
+    "one_time": false,
+    "delete_secret": null
+  },
+  "envelope": "{\"v\":3,\"profile\":2,\"alg\":\"AES-256-GCM\",\"kdf\":\"PBKDF2-SHA-256\",\"iter\":600000,\"salt\":\"CNUBJM9x9JhTN3GEpFUnSg\",\"iv\":\"ICd4MoaRHDx5Cc9a\",\"ct\":\"YuZ4t_Hsbwk8XCVvAvemPzU6G_kEvx-osJDLaxgPWM3-wdlSqNcyBfpUer4Ck3eAZ5jrGyA7mSm6SBYJQz0_WGyqzvrhYlca-eGBnHP_f8FDr0FaYM-nFk0kB_uX0F3GjfxgU1Anu6aFM_VPnbDORGN_ftc8qk2rrkSaOeYRonrqo7JPi4lth1gY93ISguDD6g8vcQykZqXdnhTMYbSGv35P5ddSLG3zct60STItoWqiCPt3nOOsv2bBbf5EMLPD20W6PEwUdtGw_TQKJwsWWdo1SMxku0M-5zhucOHMxV7qvhP_wVq7FjBvpTKA1eug-5QzG510U7K5I3uysb58VYv86Pw15xpFeoghlnTMoCA\"}"
+}
