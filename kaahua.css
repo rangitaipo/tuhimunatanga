@@ -1,0 +1,1354 @@
+:root {
+	color-scheme: light;
+	font-family: Aptos, "Segoe UI Variable", "Segoe UI", Arial, sans-serif;
+	line-height: 1.5;
+	color: #10213b;
+	background: #f5f7f8;
+	--navy: #071a38;
+	--navy-2: #0d294f;
+	--ink: #10213b;
+	--muted: #607087;
+	--teal: #0f7d7a;
+	--teal-dark: #0a6563;
+	--teal-soft: #e8f5f3;
+	--green: #207447;
+	--green-soft: #edf8f1;
+	--gold: #c99a43;
+	--line: #dbe3e9;
+	--line-strong: #cbd6df;
+	--panel: rgba(255, 255, 255, 0.96);
+	--shadow: 0 24px 70px rgba(8, 27, 57, 0.09);
+	--shadow-soft: 0 10px 30px rgba(8, 27, 57, 0.065);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html {
+	min-height: 100%;
+	overflow-y: scroll;
+	scroll-behavior: smooth;
+}
+
+body {
+	position: relative;
+	min-height: 100%;
+	margin: 0;
+	background:
+		radial-gradient(circle at 10% 8%, rgba(15, 125, 122, 0.055), transparent 30rem),
+		radial-gradient(circle at 92% 34%, rgba(201, 154, 67, 0.045), transparent 28rem),
+		linear-gradient(180deg, #fbfcfc 0%, #f4f7f8 55%, #f7f8f7 100%);
+}
+
+body::before,
+body::after {
+	position: fixed;
+	z-index: -1;
+	width: 430px;
+	height: 430px;
+	content: "";
+	opacity: 0.2;
+	pointer-events: none;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+body::before {
+	left: -235px;
+	top: 36%;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cg fill='none' stroke='%230f7d7a' stroke-width='2'%3E%3Cpath d='M250 20C120 20 20 120 20 250s100 230 230 230 230-100 230-230S380 20 250 20Z'/%3E%3Cpath d='M250 82c-92 0-168 76-168 168s76 168 168 168 168-76 168-168S342 82 250 82Z'/%3E%3Cpath d='M260 148c-58-5-106 39-106 97 0 48 38 86 86 86 40 0 73-31 73-69 0-32-26-57-57-57-25 0-46 20-46 45 0 19 15 35 34 35'/%3E%3Cpath d='M84 286c72-18 121-2 164 48M92 346c72-6 126 22 162 77'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+body::after {
+	right: -250px;
+	bottom: -125px;
+	transform: rotate(18deg);
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3E%3Cg fill='none' stroke='%23071a38' stroke-width='2'%3E%3Cpath d='M250 18C122 18 18 122 18 250s104 232 232 232 232-104 232-232S378 18 250 18Z'/%3E%3Cpath d='M250 88c-90 0-162 72-162 162s72 162 162 162 162-72 162-162S340 88 250 88Z'/%3E%3Cpath d='M247 151c-54 0-97 43-97 97 0 45 36 81 81 81 38 0 68-30 68-67 0-31-24-55-54-55-25 0-45 20-45 44 0 20 16 35 35 35'/%3E%3Cpath d='M328 100c-7 69 13 124 65 166M389 64c9 70 41 123 91 152'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+svg {
+	display: block;
+}
+
+button,
+input,
+select,
+textarea,
+[contenteditable="true"] {
+	font: inherit;
+}
+
+button,
+a,
+input,
+select,
+textarea,
+[contenteditable="true"] {
+	-webkit-tap-highlight-color: transparent;
+}
+
+.peke-ihirangi {
+	position: fixed;
+	z-index: 1000;
+	left: 1rem;
+	top: -5rem;
+	padding: 0.7rem 1rem;
+	color: #fff;
+	background: var(--teal-dark);
+	border-radius: 0 0 8px 8px;
+	transition: top 150ms ease;
+}
+
+.peke-ihirangi:focus {
+	top: 0;
+}
+
+.takai {
+	width: min(calc(100% - 48px), 1480px);
+	margin: 0 auto;
+}
+
+.pae-runga {
+	position: relative;
+	z-index: 10;
+	color: #fff;
+	background:
+		linear-gradient(90deg, rgba(7, 26, 56, 0.985), rgba(5, 22, 49, 0.965)),
+		var(--navy);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	box-shadow: 0 10px 30px rgba(7, 26, 56, 0.12);
+	overflow: hidden;
+}
+
+.pae-runga::after {
+	position: absolute;
+	right: -40px;
+	top: -92px;
+	width: 360px;
+	height: 230px;
+	content: "";
+	opacity: 0.16;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 420 260'%3E%3Cg fill='none' stroke='%2389d4cc' stroke-width='2'%3E%3Cpath d='M400 10C275 3 174 91 174 198c0 60 50 108 110 108 49 0 89-38 89-86 0-39-32-71-71-71-32 0-58 25-58 56 0 25 20 46 45 46'/%3E%3Cpath d='M310 18c-79 48-119 112-118 191M366 29c-66 62-91 130-75 207'/%3E%3Cpath d='M116 22c22 67 73 110 151 130M53 48c34 68 91 103 170 108'/%3E%3C/g%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-size: contain;
+	pointer-events: none;
+}
+
+.pane {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 2rem;
+	min-height: 78px;
+	padding: 0.9rem 0;
+}
+
+.waitohu,
+.waitohu:visited {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.9rem;
+	min-width: 0;
+	color: #fff;
+	text-decoration: none;
+}
+
+.waitohu:hover,
+.waitohu:focus-visible {
+	text-decoration: none;
+}
+
+.waitohu-tohu {
+	display: grid;
+	width: 44px;
+	height: 44px;
+	place-items: center;
+	color: #69d0c5;
+	border: 1px solid rgba(105, 208, 197, 0.7);
+	border-radius: 50%;
+	box-shadow: inset 0 0 0 4px rgba(105, 208, 197, 0.07);
+	flex: 0 0 auto;
+}
+
+.waitohu-tohu svg {
+	width: 34px;
+	height: 34px;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 2.2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.waitohu-kupu {
+	display: flex;
+	align-items: baseline;
+	gap: 1rem;
+	min-width: 0;
+}
+
+.waitohu-kupu strong {
+	font-family: Georgia, "Times New Roman", serif;
+	font-size: clamp(1.45rem, 2.1vw, 2rem);
+	font-weight: 650;
+	letter-spacing: -0.025em;
+	white-space: nowrap;
+}
+
+.waitohu-kupu small {
+	position: relative;
+	padding-left: 1rem;
+	color: #cbd7e5;
+	font-size: 0.92rem;
+	white-space: nowrap;
+}
+
+.waitohu-kupu small::before {
+	position: absolute;
+	left: 0;
+	top: 0.12em;
+	width: 1px;
+	height: 1.15em;
+	content: "";
+	background: rgba(255, 255, 255, 0.28);
+}
+
+.pane-whakapono {
+	display: flex;
+	align-items: center;
+	gap: 1.4rem;
+	color: #e3ebf3;
+	font-size: 0.9rem;
+}
+
+.tohu-whakapono {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	white-space: nowrap;
+}
+
+.tohu-whakapono svg {
+	width: 19px;
+	height: 19px;
+	fill: none;
+	stroke: #76d2c8;
+	stroke-width: 1.8;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+main {
+	padding-top: 2rem;
+	padding-bottom: 3rem;
+}
+
+.wharangi-upoko {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	gap: 2rem;
+	padding: 0.5rem 0 1.6rem;
+}
+
+.wharangi-upoko > div {
+	max-width: 980px;
+}
+
+.kupu-runga {
+	margin: 0 0 0.35rem;
+	color: var(--teal-dark);
+	font-size: 0.78rem;
+	font-weight: 800;
+	letter-spacing: 0.13em;
+	text-transform: uppercase;
+}
+
+.wharangi-upoko h1 {
+	margin: 0;
+	font-family: Georgia, "Times New Roman", serif;
+	font-size: clamp(2.35rem, 4.2vw, 3.55rem);
+	font-weight: 650;
+	letter-spacing: -0.04em;
+	line-height: 1.04;
+	color: var(--navy);
+}
+
+.wharangi-upoko p:not(.kupu-runga) {
+	max-width: 940px;
+	margin: 0.65rem 0 0;
+	color: #52647a;
+	font-size: 1.05rem;
+}
+
+.hononga-awhina,
+.hononga-awhina:visited {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.45rem;
+	padding: 0.65rem 0.8rem;
+	color: #4e6176;
+	font-weight: 650;
+	text-decoration: none;
+	white-space: nowrap;
+	border-radius: 8px;
+}
+
+.hononga-awhina:hover,
+.hononga-awhina:focus-visible {
+	color: var(--teal-dark);
+	background: rgba(15, 125, 122, 0.055);
+	text-decoration: none;
+}
+
+.whakataki {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 0;
+	margin-bottom: 1rem;
+	background: rgba(255, 255, 255, 0.76);
+	border: 1px solid var(--line);
+	border-radius: 13px;
+	box-shadow: var(--shadow-soft);
+	backdrop-filter: blur(12px);
+	overflow: hidden;
+}
+
+.whakataki-take {
+	display: flex;
+	align-items: center;
+	gap: 0.8rem;
+	min-width: 0;
+	padding: 0.9rem 1.1rem;
+}
+
+.whakataki-take + .whakataki-take {
+	border-left: 1px solid var(--line);
+}
+
+.whakataki-tohu {
+	display: grid;
+	width: 30px;
+	height: 30px;
+	place-items: center;
+	color: var(--teal-dark);
+	font-size: 0.78rem;
+	font-weight: 850;
+	background: var(--teal-soft);
+	border: 1px solid rgba(15, 125, 122, 0.18);
+	border-radius: 50%;
+	flex: 0 0 auto;
+}
+
+.whakataki-take div {
+	display: flex;
+	min-width: 0;
+	flex-direction: column;
+}
+
+.whakataki-take strong {
+	color: var(--ink);
+	font-size: 0.9rem;
+}
+
+.whakataki-take span:not(.whakataki-tohu) {
+	color: var(--muted);
+	font-size: 0.8rem;
+	line-height: 1.35;
+}
+
+.kaari {
+	position: relative;
+	margin: 0 0 1rem;
+	padding: clamp(1.15rem, 2.2vw, 1.7rem);
+	background: var(--panel);
+	border: 1px solid var(--line);
+	border-radius: 14px;
+	box-shadow: var(--shadow-soft);
+}
+
+.hanga-matapihi form {
+	display: grid;
+	gap: 1rem;
+}
+
+h1,
+h2,
+h3,
+p {
+	margin-top: 0;
+}
+
+h2,
+h3 {
+	color: var(--navy);
+}
+
+h2 {
+	font-family: Georgia, "Times New Roman", serif;
+	font-size: clamp(1.35rem, 2vw, 1.8rem);
+	font-weight: 650;
+	letter-spacing: -0.025em;
+}
+
+h3 {
+	font-size: 1.05rem;
+}
+
+a,
+a:visited {
+	color: var(--teal-dark);
+	text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+	text-decoration: underline;
+}
+
+.upoko-kaari {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.9rem;
+	min-width: 0;
+}
+
+.upoko-kaari-tohu {
+	display: grid;
+	width: 44px;
+	height: 44px;
+	place-items: center;
+	color: var(--teal-dark);
+	background: var(--teal-soft);
+	border: 1px solid rgba(15, 125, 122, 0.18);
+	border-radius: 12px;
+	flex: 0 0 auto;
+}
+
+.upoko-kaari-tohu svg {
+	width: 23px;
+	height: 23px;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1.8;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+.upoko-kaari h2 {
+	margin-bottom: 0.2rem;
+}
+
+.upoko-kaari p {
+	margin-bottom: 0;
+	color: var(--muted);
+	font-size: 0.92rem;
+}
+
+label {
+	display: block;
+	margin-top: 1rem;
+	margin-bottom: 0.4rem;
+	color: #263a55;
+	font-size: 0.9rem;
+	font-weight: 750;
+}
+
+.tapanga-iti {
+	font-size: 0.82rem;
+}
+
+textarea,
+input[type="text"],
+select {
+	width: 100%;
+	padding: 0.82rem 0.92rem;
+	color: #172841;
+	background: #fff;
+	border: 1px solid #bdcad5;
+	border-radius: 9px;
+	box-shadow: inset 0 1px 2px rgba(8, 27, 57, 0.035);
+	transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+}
+
+textarea {
+	resize: vertical;
+}
+
+textarea:focus,
+input:focus,
+select:focus,
+button:focus-visible,
+[contenteditable="true"]:focus,
+a:focus-visible {
+	outline: 3px solid rgba(15, 125, 122, 0.19);
+	outline-offset: 2px;
+}
+
+textarea:focus,
+input:focus,
+select:focus,
+[contenteditable="true"]:focus {
+	border-color: rgba(15, 125, 122, 0.7);
+	box-shadow: 0 0 0 4px rgba(15, 125, 122, 0.08);
+}
+
+.whangaonokupu,
+.Kupuhipa {
+	font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+	font-size: 0.98rem;
+	line-height: 1.7;
+}
+
+button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	min-height: 44px;
+	padding: 0.72rem 1.05rem;
+	color: #fff;
+	background: var(--teal-dark);
+	border: 1px solid transparent;
+	border-radius: 9px;
+	font-weight: 750;
+	cursor: pointer;
+	box-shadow: 0 7px 18px rgba(10, 101, 99, 0.15);
+	transition: transform 120ms ease, filter 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+button::before {
+	font-size: 1rem;
+	font-weight: 500;
+}
+
+button:hover:not(:disabled) {
+	filter: brightness(0.96);
+	transform: translateY(-1px);
+	box-shadow: 0 10px 24px rgba(10, 101, 99, 0.19);
+}
+
+button:active:not(:disabled) {
+	transform: translateY(0);
+}
+
+button:disabled {
+	cursor: wait;
+	opacity: 0.62;
+	box-shadow: none;
+}
+
+.patene-matua {
+	background: linear-gradient(135deg, #11847f 0%, #0a6c69 100%);
+}
+
+.patene-tuarua {
+	color: var(--navy);
+	background: #fff;
+	border-color: #9ab7bd;
+	box-shadow: 0 4px 12px rgba(8, 27, 57, 0.05);
+}
+
+.patene-tuarua:hover:not(:disabled) {
+	color: var(--teal-dark);
+	background: #f8fcfb;
+	border-color: #5fa4a0;
+	box-shadow: 0 7px 18px rgba(8, 27, 57, 0.08);
+}
+
+[data-copy-target]::before,
+[data-copy-html-target]::before {
+	content: "▣";
+}
+
+.patene-hou::before {
+	content: "↻";
+	font-size: 1.25rem;
+}
+
+.patene-whakamuna {
+	min-width: 210px;
+	background: linear-gradient(135deg, #0c315e 0%, #071a38 100%);
+	box-shadow: 0 9px 24px rgba(7, 26, 56, 0.19);
+}
+
+.patene-whakamuna::before {
+	content: "◆";
+	color: #75d3c9;
+	font-size: 0.75rem;
+}
+
+.raina-taarua {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 0.65rem;
+	align-items: stretch;
+}
+
+.raina-patene {
+	display: flex;
+	justify-content: flex-end;
+	gap: 0.65rem;
+	margin-top: 0.7rem;
+	flex-wrap: wrap;
+}
+
+.kupuhipa-whakarite {
+	padding: clamp(1.2rem, 2.4vw, 2rem);
+	background:
+		linear-gradient(160deg, rgba(255, 255, 255, 0.99), rgba(249, 252, 251, 0.96)),
+		#fff;
+	border-top: 4px solid var(--gold);
+	box-shadow: var(--shadow);
+	overflow: hidden;
+}
+
+.kupuhipa-whakarite::after {
+	position: absolute;
+	right: -70px;
+	top: -85px;
+	width: 260px;
+	height: 260px;
+	content: "";
+	opacity: 0.06;
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 260 260'%3E%3Cg fill='none' stroke='%230f7d7a' stroke-width='2'%3E%3Ccircle cx='130' cy='130' r='112'/%3E%3Ccircle cx='130' cy='130' r='79'/%3E%3Cpath d='M145 70c-53-7-94 34-94 83 0 41 33 73 74 73 34 0 61-27 61-60 0-27-22-49-49-49-22 0-40 18-40 39 0 17 14 31 31 31'/%3E%3C/g%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-size: contain;
+	pointer-events: none;
+}
+
+.pane-kupuhipa {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 1.4rem;
+}
+
+.pane-kupuhipa .upoko-kaari {
+	max-width: 920px;
+}
+
+.pane-kupuhipa h2 {
+	margin-bottom: 0.18rem;
+}
+
+.pane-kupuhipa p {
+	margin-bottom: 0;
+	color: var(--muted);
+}
+
+.patene-iti {
+	min-height: 42px;
+	padding: 0.62rem 0.9rem;
+	font-size: 0.9rem;
+	flex: 0 0 auto;
+}
+
+.kupuhipa-kaha {
+	position: relative;
+	z-index: 1;
+	display: grid;
+	grid-template-columns: minmax(240px, 0.75fr) minmax(280px, 1fr);
+	gap: 0.9rem 1.25rem;
+	margin-top: 1.2rem;
+	padding: 1rem 1.05rem;
+	background: linear-gradient(135deg, rgba(7, 26, 56, 0.035), rgba(15, 125, 122, 0.055));
+	border: 1px solid #d2dfe5;
+	border-radius: 12px;
+}
+
+.kupuhipa-whiriwhiri {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 132px;
+	align-items: center;
+	gap: 0.42rem 0.8rem;
+}
+
+.kupuhipa-whiriwhiri label {
+	color: var(--navy);
+	font-size: 0.88rem;
+	font-weight: 800;
+}
+
+.kupuhipa-whiriwhiri select {
+	width: 100%;
+	min-height: 44px;
+	padding: 0.58rem 2.2rem 0.58rem 0.78rem;
+	color: var(--navy);
+	background-color: #fff;
+	border: 1px solid #9eb6c3;
+	border-radius: 8px;
+	font: inherit;
+	font-weight: 800;
+	cursor: pointer;
+}
+
+.kupuhipa-whiriwhiri select:focus {
+	outline: 3px solid rgba(15, 125, 122, 0.16);
+	border-color: var(--teal);
+}
+
+.kupuhipa-whiriwhiri p {
+	grid-column: 1 / -1;
+	margin: 0;
+	color: var(--muted);
+	font-size: 0.78rem;
+	line-height: 1.42;
+}
+
+.kupuhipa-kaha-whakarāpopoto {
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	gap: 0.55rem;
+	flex-direction: column;
+	text-align: right;
+}
+
+.tohu-kaha {
+	display: inline-flex;
+	align-items: center;
+	min-height: 30px;
+	padding: 0.32rem 0.68rem;
+	color: #344b60;
+	background: #eef3f6;
+	border: 1px solid #c7d5dd;
+	border-radius: 999px;
+	font-size: 0.74rem;
+	font-weight: 850;
+	letter-spacing: 0.025em;
+}
+
+.tohu-kaha[data-kaha="quantum"] {
+	color: #075f59;
+	background: #e7f6f2;
+	border-color: #7bbdb4;
+}
+
+.tohu-kaha[data-kaha="tata"] {
+	color: #795711;
+	background: #fff7df;
+	border-color: #dfc16f;
+}
+
+.tohu-kaha[data-kaha="teitei"],
+.tohu-kaha[data-kaha="kaha"] {
+	color: #174f75;
+	background: #edf6fb;
+	border-color: #9bc3dc;
+}
+
+.kupuhipa-kaha-whakarāpopoto strong {
+	color: var(--navy);
+	font-size: 0.92rem;
+}
+
+.kupuhipa-pangarau {
+	grid-column: 1 / -1;
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 0.45rem 0.7rem;
+	padding-top: 0.82rem;
+	border-top: 1px solid rgba(115, 141, 153, 0.24);
+}
+
+.kupuhipa-pangarau span {
+	display: block;
+	padding: 0.62rem 0.72rem;
+	color: #32485c;
+	background: rgba(255, 255, 255, 0.76);
+	border: 1px solid rgba(183, 201, 210, 0.72);
+	border-radius: 8px;
+	font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+	font-size: 0.72rem;
+	line-height: 1.45;
+}
+
+.kupuhipa-kaha-kupu {
+	grid-column: 1 / -1;
+	margin: 0;
+	color: #607185;
+	font-size: 0.72rem;
+	line-height: 1.45;
+}
+
+.kupuhipa-kaha-hua {
+	margin: 0.55rem 0 0;
+	padding: 0.65rem 0.75rem;
+	color: #27455b;
+	background: #f2f7f8;
+	border-left: 3px solid var(--teal);
+	border-radius: 0 7px 7px 0;
+	font-size: 0.78rem;
+	line-height: 1.45;
+}
+
+.kupuhipa-kari {
+	position: relative;
+	z-index: 1;
+	display: grid;
+	grid-template-columns: repeat( auto-fit, minmax( 220px, 1fr ) );
+	gap: 0.72rem;
+	min-height: 7rem;
+	margin-top: 1.25rem;
+	padding: 0;
+	transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+.kupuhipa-kupu {
+	position: relative;
+	display: flex;
+	min-width: 0;
+	min-height: 4.6rem;
+	padding: 0.72rem 0.92rem 0.8rem;
+	flex-direction: column;
+	justify-content: center;
+	background: linear-gradient(145deg, #fff 0%, #fbfcfc 100%);
+	border: 1px solid #d4dfe6;
+	border-radius: 10px;
+	box-shadow: 0 4px 12px rgba(8, 27, 57, 0.045);
+	overflow: hidden;
+	transition: transform 120ms ease, border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.kupuhipa-kupu::after {
+	position: absolute;
+	right: -14px;
+	bottom: -22px;
+	width: 74px;
+	height: 74px;
+	content: "";
+	opacity: 0.07;
+	background:
+		radial-gradient(circle at 50% 50%, transparent 0 20%, var(--teal) 21% 23%, transparent 24% 37%, var(--teal) 38% 40%, transparent 41% 54%, var(--teal) 55% 57%, transparent 58%);
+	pointer-events: none;
+}
+
+.kupuhipa-kupu:hover {
+	transform: translateY(-1px);
+	border-color: #a9c7c9;
+	box-shadow: 0 8px 20px rgba(8, 27, 57, 0.07);
+}
+
+.kupuhipa-waehere {
+	display: block;
+	margin-bottom: 0.2rem;
+	color: #607185;
+	font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+	font-size: 0.7rem;
+	font-weight: 800;
+	letter-spacing: 0.16em;
+	line-height: 1.1;
+}
+
+.kupuhipa-kupu-matua {
+	display: block;
+	min-width: 0;
+	color: var(--navy);
+	font-size: 1.13rem;
+	font-weight: 760;
+	letter-spacing: 0.01em;
+	line-height: 1.24;
+	overflow-wrap: anywhere;
+}
+
+.kupuhipa-raro {
+	position: relative;
+	z-index: 1;
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto;
+	align-items: center;
+	gap: 1.25rem;
+	margin-top: 1.15rem;
+	padding-top: 1rem;
+	border-top: 1px solid var(--line);
+}
+
+.kupuhipa-patene {
+	display: flex;
+	justify-content: flex-start;
+	gap: 0.7rem;
+	margin: 0;
+	flex-wrap: wrap;
+}
+
+.kupuhipa-patene button {
+	min-width: 190px;
+}
+
+.kupuhipa-whakamaumahara {
+	display: flex;
+	align-items: center;
+	gap: 0.7rem;
+	max-width: 360px;
+	color: #45586f;
+}
+
+.kupuhipa-whakamaumahara svg {
+	width: 27px;
+	height: 27px;
+	fill: none;
+	stroke: var(--teal-dark);
+	stroke-width: 1.7;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	flex: 0 0 auto;
+}
+
+.kupuhipa-whakamaumahara p {
+	display: flex;
+	margin: 0;
+	flex-direction: column;
+	font-size: 0.82rem;
+}
+
+.kupuhipa-whakamaumahara strong {
+	color: #203750;
+}
+
+.kupuhipa-whakamaumahara span {
+	color: var(--muted);
+}
+
+.kupuhipa-utaina {
+	align-self: center;
+	color: var(--muted);
+	font-style: italic;
+}
+
+button.kua-taarua {
+	color: #fff;
+	background: var(--green);
+	border-color: var(--green);
+	box-shadow: 0 0 0 4px rgba(32, 116, 71, 0.12);
+}
+
+.tohu-kua-taarua {
+	border-color: #54a173 !important;
+	background-color: var(--green-soft) !important;
+	box-shadow: 0 0 0 4px rgba(32, 116, 71, 0.1) !important;
+}
+
+.etita-kaari {
+	padding: clamp(1.2rem, 2.2vw, 1.7rem);
+}
+
+.etita-upoko {
+	margin-bottom: 1rem;
+}
+
+.etita-whaihanga {
+	width: 100%;
+	min-height: 24rem;
+	max-height: 65vh;
+	padding: 1.15rem;
+	overflow: auto;
+	color: #172841;
+	background: #fff;
+	border: 1px solid #bdcad5;
+	border-radius: 10px;
+	font-family: Calibri, Aptos, "Segoe UI", Arial, sans-serif;
+	line-height: 1.48;
+	overflow-wrap: anywhere;
+	box-shadow: inset 0 1px 3px rgba(8, 27, 57, 0.035);
+}
+
+.etita-whaihanga:empty::before {
+	content: attr(data-placeholder);
+	color: #84909c;
+	pointer-events: none;
+}
+
+.etita-whaihanga table,
+.ripanga-takai table {
+	max-width: 100%;
+	border-collapse: collapse;
+}
+
+.etita-whaihanga th,
+.etita-whaihanga td,
+.ripanga-takai th,
+.ripanga-takai td {
+	padding: 0.45rem;
+	vertical-align: top;
+	border: 1px solid #cdd5da;
+	text-align: left;
+}
+
+.tautuhinga-kaari {
+	padding: 1.1rem 1.25rem;
+}
+
+.tautuhinga-matapihi {
+	display: grid;
+	grid-template-columns: minmax(280px, 1.2fr) minmax(240px, 0.8fr) auto;
+	align-items: end;
+	gap: 1.1rem;
+}
+
+.tautuhinga-āpure label {
+	margin-top: 0;
+}
+
+.tautuhinga-whakamārama {
+	display: flex;
+	padding-bottom: 0.15rem;
+	flex-direction: column;
+	color: var(--muted);
+	font-size: 0.82rem;
+}
+
+.tautuhinga-whakamārama strong {
+	color: #2b4059;
+}
+
+.hua-matapihi {
+	display: grid;
+	grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+	gap: 1rem;
+}
+
+.hua-matapihi .kaari {
+	margin-bottom: 0;
+}
+
+.hua-hononga .upoko-kaari {
+	margin-bottom: 0.5rem;
+}
+
+.hua-tūmataiti {
+	background: linear-gradient(150deg, #f5fbf9 0%, #fff 100%);
+}
+
+.tūmataiti-taitara {
+	display: flex;
+	align-items: center;
+	gap: 0.7rem;
+}
+
+.tūmataiti-taitara > span {
+	display: grid;
+	width: 34px;
+	height: 34px;
+	place-items: center;
+	color: #fff;
+	background: var(--teal-dark);
+	border-radius: 50%;
+}
+
+.tūmataiti-taitara h2 {
+	margin: 0;
+	font-family: inherit;
+	font-size: 1.1rem;
+	color: var(--teal-dark);
+}
+
+.hua-tūmataiti ul {
+	display: grid;
+	gap: 0.85rem;
+	margin: 1.1rem 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.hua-tūmataiti li {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.65rem;
+	color: #455970;
+	font-size: 0.9rem;
+}
+
+.hua-tūmataiti li span {
+	color: var(--teal-dark);
+	font-weight: 800;
+}
+
+.wetemuna-kaari {
+	max-width: 860px;
+	margin-left: auto;
+	margin-right: auto;
+	box-shadow: var(--shadow);
+}
+
+.hua-wetemuna {
+	box-shadow: var(--shadow);
+}
+
+.puta-whaihanga {
+	display: block;
+	width: 100%;
+	min-height: 32rem;
+	margin-top: 1rem;
+	background: #fff;
+	border: 1px solid #bdcad5;
+	border-radius: 10px;
+}
+
+.karere {
+	padding-top: 0.95rem;
+	padding-bottom: 0.95rem;
+}
+
+.karere p {
+	margin: 0;
+}
+
+.hapa {
+	border-left: 5px solid #9c2f2f;
+	background: #fff6f6;
+}
+
+.angitu {
+	border-left: 5px solid var(--green);
+	background: var(--green-soft);
+}
+
+.whakatupato {
+	margin-top: 1rem;
+	padding: 0.85rem 0.95rem;
+	color: #6f4c17;
+	background: #fff8e9;
+	border-left: 4px solid var(--gold);
+	border-radius: 7px;
+}
+
+.iti {
+	color: var(--muted);
+	font-size: 0.9rem;
+}
+
+.pokapu {
+	text-align: center;
+}
+
+.pouaka-raraunga {
+	margin-top: 1rem;
+	padding: 0.85rem;
+	background: #f3f7f8;
+	border: 1px solid #d7e1e5;
+	border-radius: 8px;
+}
+
+.ripanga-takai {
+	overflow-x: auto;
+}
+
+.huna {
+	position: fixed;
+	left: -10000px;
+	top: -10000px;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+}
+
+[hidden] {
+	display: none !important;
+}
+
+footer {
+	color: #748093;
+	background: rgba(255, 255, 255, 0.65);
+	border-top: 1px solid rgba(203, 214, 223, 0.7);
+}
+
+.waewae {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding-top: 1.15rem;
+	padding-bottom: 1.5rem;
+	font-size: 0.84rem;
+}
+
+.waewae p {
+	margin: 0;
+}
+
+code {
+	font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+@media (max-width: 1120px) {
+	.waitohu-kupu small {
+		display: none;
+	}
+
+	.kupuhipa-kaha,
+	.kupuhipa-raro,
+	.tautuhinga-matapihi,
+	.hua-matapihi {
+		grid-template-columns: 1fr;
+	}
+
+	.kupuhipa-whakamaumahara {
+		max-width: none;
+	}
+
+	.patene-whakamuna {
+		width: 100%;
+	}
+}
+
+@media (max-width: 860px) {
+	.takai {
+		width: min(calc(100% - 30px), 1480px);
+	}
+
+	.pane-whakapono {
+		display: none;
+	}
+
+	.wharangi-upoko {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.whakataki {
+		grid-template-columns: 1fr;
+	}
+
+	.whakataki-take + .whakataki-take {
+		border-left: 0;
+		border-top: 1px solid var(--line);
+	}
+
+	.pane-kupuhipa {
+		flex-direction: column;
+	}
+
+	.pane-kupuhipa .patene-iti {
+		width: 100%;
+	}
+
+	.kupuhipa-kari {
+		grid-template-columns: repeat( auto-fit, minmax( 180px, 1fr ) );
+	}
+}
+
+@media (max-width: 620px) {
+	.takai {
+		width: min(calc(100% - 22px), 1480px);
+	}
+
+	.pane {
+		min-height: 68px;
+	}
+
+	.waitohu-tohu {
+		width: 38px;
+		height: 38px;
+	}
+
+	.waitohu-tohu svg {
+		width: 30px;
+		height: 30px;
+	}
+
+	.waitohu-kupu strong {
+		font-size: 1.35rem;
+	}
+
+	main {
+		padding-top: 1.25rem;
+	}
+
+	.wharangi-upoko h1 {
+		font-size: 2.2rem;
+	}
+
+	.wharangi-upoko p:not(.kupu-runga) {
+		font-size: 0.95rem;
+	}
+
+	.kupuhipa-whakarite,
+	.kaari {
+		padding: 1rem;
+		border-radius: 11px;
+	}
+
+	.upoko-kaari-tohu {
+		width: 38px;
+		height: 38px;
+	}
+
+	.kupuhipa-whiriwhiri {
+		grid-template-columns: 1fr;
+	}
+
+	.kupuhipa-kaha-whakarāpopoto {
+		align-items: flex-start;
+		text-align: left;
+	}
+
+	.kupuhipa-pangarau {
+		grid-template-columns: 1fr;
+	}
+
+	.kupuhipa-kari {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 0.55rem;
+	}
+
+	.kupuhipa-kupu {
+		min-height: 4.35rem;
+		padding: 0.66rem 0.72rem;
+	}
+
+	.kupuhipa-kupu-matua {
+		font-size: 1rem;
+	}
+
+	.kupuhipa-patene {
+		display: grid;
+		grid-template-columns: 1fr;
+	}
+
+	.kupuhipa-patene button,
+	.raina-taarua button,
+	.raina-patene button {
+		width: 100%;
+	}
+
+	.raina-taarua {
+		grid-template-columns: 1fr;
+	}
+
+	.raina-patene {
+		display: grid;
+		grid-template-columns: 1fr;
+	}
+
+	.etita-whaihanga {
+		min-height: 19rem;
+	}
+
+	.waewae {
+		align-items: flex-start;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+}
+
+@media (max-width: 390px) {
+	.kupuhipa-kari {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		scroll-behavior: auto !important;
+		transition-duration: 0.01ms !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+	}
+}

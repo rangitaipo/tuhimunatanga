@@ -1,0 +1,32 @@
+Options -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+
+	# Force HTTPS. Remove these three lines only when HTTPS is handled by a
+	# reverse proxy that already redirects before Apache receives the request.
+	RewriteCond %{HTTPS} !=on
+	RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+	RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+	RewriteRule ^(?:raraunga|bin|tests)(?:/|$) - [F,L,NC]
+	RewriteRule ^(?:README\.md|SHA256SUMS\.txt|schema\.sql|VERSION)$ - [F,L,NC]
+</IfModule>
+
+<FilesMatch "(?i)(^\.|\.ini(?:\.example)?$|\.db$|\.sha256$|\.sql$|\.md$|\.lock$|\.log$)">
+	<IfModule mod_authz_core.c>
+		Require all denied
+	</IfModule>
+	<IfModule !mod_authz_core.c>
+		Order allow,deny
+		Deny from all
+	</IfModule>
+</FilesMatch>
+
+<IfModule mod_headers.c>
+	Header always set X-Content-Type-Options "nosniff"
+	Header always set Referrer-Policy "no-referrer"
+	Header always set X-Frame-Options "DENY"
+	Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+</IfModule>
