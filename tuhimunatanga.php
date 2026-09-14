@@ -16,7 +16,7 @@ final class Tuhimunatanga {
 	public const TAKAI_KDF = 600_000;
 	public const RAHI_KOPAKI_TEITEI = 4_500_000;
 
-	public string $taitara = 'Tuhimunatanga v3.1.2 | Browser-encrypted paste';
+	public string $taitara = 'Tuhimunatanga v1.0 | Browser-encrypted paste';
 	public string $csrf = '';
 	public string $karere_hapa = '';
 
@@ -144,6 +144,9 @@ final class Tuhimunatanga {
 			$haatepe = $this->haatepe_rapu( $haatepe_papahono );
 
 			$waahanga = 'preparing the expiry metadata';
+			if ( $panui_kotahi && $waahikee === null ) {
+				$waahikee = 31_557_600;
+			}
 			$waitohuwaa_mutu = is_int( $waahikee ) ? $inaianei + $waahikee : null;
 
 			$waahanga = 'saving the encrypted envelope';
@@ -205,9 +208,19 @@ final class Tuhimunatanga {
 
 		try {
 			$inaianei = time();
+			$wa_ip = $this->tikina_wa_ip();
+			$wa_ip_hash = $this->haatepe_tūmataiti( 'ip', $wa_ip, true );
+			$matua_hash = $this->haatepe_tūmataiti( 'tiro', $wa_ip, true );
+			if ( $this->kua_aukati( 'tiro', $matua_hash, $wa_ip_hash, $inaianei - 3600, 50, 100 ) ) {
+				$this->whakautu_json(
+					[ 'ok' => false, 'code' => 'rate_limit', 'message' => 'Too many paste retrievals have been attempted from this address. Try again later.' ],
+					429
+				);
+			}
 			$haatepe = $this->haatepe_rapu( $haatepe_papahono );
 			$rarangi = $this->raraunga->tikina( $haatepe );
 			if ( $rarangi === null ) {
+				$this->raraunga->tuhia_ngana( 'tiro', $matua_hash, $wa_ip_hash, $inaianei );
 				$this->whakautu_json(
 					[ 'ok' => false, 'code' => 'not_found', 'message' => 'No v3 paste was found for this secure link.' ],
 					404
@@ -222,6 +235,7 @@ final class Tuhimunatanga {
 			}
 
 			$kopaki_hua = $this->wetewete_kopaki( ( string ) $rarangi[ 'rarangi_huna' ] );
+			$this->raraunga->tuhia_ngana( 'tiro', $matua_hash, $wa_ip_hash, $inaianei );
 			$this->whakautu_json(
 				[
 					'ok' => true,
@@ -270,9 +284,20 @@ final class Tuhimunatanga {
 
 		try {
 			$haatepe = $this->haatepe_rapu( $haatepe_papahono );
+			$wa_ip = $this->tikina_wa_ip();
+			$wa_ip_hash = $this->haatepe_tūmataiti( 'ip', $wa_ip, true );
+			$matua_hash = $this->haatepe_tūmataiti( 'mukua', $wa_ip, true );
+			$inaianei_mukua = time();
+			if ( $this->kua_aukati( 'mukua', $matua_hash, $wa_ip_hash, $inaianei_mukua - 3600, 10, 20 ) ) {
+				$this->whakautu_json(
+					[ 'ok' => false, 'code' => 'rate_limit', 'message' => 'Too many deletion attempts have been made from this address. Try again later.' ],
+					429
+				);
+			}
 			$mukua_hash = hash( 'sha256', $haatepe_papahono . "\0" . $mukua_muna, true );
 			$mukua = $this->raraunga->mukua_ki_te_hash( $haatepe, $mukua_hash );
 			if ( !$mukua ) {
+				$this->raraunga->tuhia_ngana( 'mukua', $matua_hash, $wa_ip_hash, $inaianei_mukua );
 				$this->whakautu_json(
 					[ 'ok' => false, 'code' => 'not_deleted', 'message' => 'The one-time paste was not deleted. It may already be gone.' ],
 					409
@@ -402,8 +427,10 @@ final class Tuhimunatanga {
 	}
 
 	private function whakapai_ngana_tupono( int $inaianei ): void {
-		if ( random_int( 1, 100 ) <= 5 ) {
+		$whakamutunga = $_SESSION[ 'whakapai_ngana_tupono' ] ?? 0;
+		if ( $inaianei - ( int ) $whakamutunga >= 900 ) {
 			$this->raraunga->whakapai_ngana( $inaianei - 86_400 );
+			$_SESSION[ 'whakapai_ngana_tupono' ] = $inaianei;
 		}
 	}
 
@@ -596,7 +623,8 @@ final class Tuhimunatanga {
 
 	public static function he_https(): bool {
 		return ( !empty( $_SERVER[ 'HTTPS' ] ) && strtolower( ( string ) $_SERVER[ 'HTTPS' ] ) !== 'off' ) ||
-			( string ) ( $_SERVER[ 'SERVER_PORT' ] ?? '' ) === '443';
+			( string ) ( $_SERVER[ 'SERVER_PORT' ] ?? '' ) === '443' ||
+			strtolower( ( string ) ( $_SERVER[ 'HTTP_X_FORWARDED_PROTO' ] ?? '' ) ) === 'https';
 	}
 
 	public function __destruct() {
