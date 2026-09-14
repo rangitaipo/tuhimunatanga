@@ -2,7 +2,7 @@
 
 ## Report scope
 
-This report records the validation state of `raraunga/7776_kupu.db` supplied with Tuhimunatanga v3.1.2 on 24 August 2026.
+This report records the validation state of `raraunga/7776_kupu.db` supplied with Tuhimunatanga v1.0.
 
 The application treats the Diceware code and displayed word as separate values. Macrons and other valid Unicode letters are preserved. Words are normalised to Unicode NFC by PHP when the optional `intl` extension is available, and by JavaScript when passphrases are generated.
 

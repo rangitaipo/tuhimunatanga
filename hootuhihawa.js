@@ -131,7 +131,7 @@
 
 	function tikinaKupuKatoa() {
 		const ipu = tiki( 'kupu_katoa_v3' );
-		const katoa = Number( ipu?.value || 22 );
+		const katoa = Number( ipu?.value || 7 );
 		if ( !Number.isInteger( katoa ) || katoa < 7 || katoa > 22 ) {
 			throw new Error( 'Choose a passphrase length between 7 and 22 words.' );
 		}
@@ -171,7 +171,7 @@
 	}
 
 	function tapangaKaha( tatauranga ) {
-		if ( tatauranga.katoa === 22 && tatauranga.quantum >= 128 ) {
+		if ( tatauranga.katoa >= 22 && tatauranga.quantum >= 128 ) {
 			return {
 				kupu: 'Post-quantum target reached',
 				momo: 'quantum',

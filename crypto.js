@@ -139,7 +139,7 @@
 		};
 	}
 
-	function mauKupuhipa( kupu, katoa = 20 ) {
+	function mauKupuhipa( kupu, katoa = 7 ) {
 		if ( !Array.isArray( kupu ) || kupu.length !== 7776 ) {
 			throw new Error( 'The passphrase wordlist does not contain 7,776 entries.' );
 		}

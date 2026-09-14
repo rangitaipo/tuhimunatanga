@@ -22,4 +22,4 @@ if ( twentyTwo.effective !== 256 || twentyTwo.quantum !== 128 ) {
 	throw new Error( 'Twenty-two words do not reach the configured post-quantum target.' );
 }
 
-console.log( 'Entropy calculations passed: 22 words -> 262.35-bit conservative entropy, 256-bit effective ceiling, 128-bit simplified quantum-search estimate.' );
+console.log( 'Entropy calculations passed: 7 words -> 83.47-bit conservative entropy; 22 words -> 262.35-bit conservative entropy, 256-bit effective ceiling, 128-bit simplified quantum-search estimate.' );

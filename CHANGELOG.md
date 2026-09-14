@@ -2,7 +2,7 @@
 
 This file records the verified state of the supplied source. Earlier release history was not included in the fileset and cannot be reconstructed reliably.
 
-## 3.1.2, 24 August 2026
+## 1.0
 
 ### Application state
 
@@ -11,13 +11,18 @@ This file records the verified state of the supplied source. Earlier release his
 - Encryption profile 2 binds link-token and expiry-policy metadata through authenticated additional data.
 - Retrieval compatibility for legacy profile 1 envelopes.
 - New 22-character base-62 tokens, with legacy 15-character retrieval support.
-- Māori Diceware generation selectable from 7 to 22 words, defaulting to 22.
+- Māori Diceware generation selectable from 7 to 22 words, defaulting to 7. Passphrases shorter than 22 words do not resist a large-scale quantum-computer attack.
 - Diceware codes displayed alongside words.
 - Ideal, duplicate-aware conservative, AES-ceiling and simplified quantum-search calculations.
 - Rich formatted-text input with allowlist sanitisation before encryption and after decryption.
 - Sandboxed decrypted-content display and formatted clipboard output.
 - Visible copied-state feedback for links, passphrases and formatted content.
 - Timed expiry, no automatic expiry and browser-confirmed one-time deletion.
+- Rate limits on paste retrieval and one-time deletion endpoints.
+- One-time pastes without an explicit expiry are enforced to a maximum age of one year.
+- HTTPS detection includes the `X-Forwarded-Proto` header for reverse-proxy deployments.
+- Time-based rate-limit record cleanup replaces random sampling.
+- Wordlist `If-None-Match` check evaluates the cached ETag before reading the full wordlist file.
 - HMAC-derived lookup and rate-limit identifiers.
 - Command-line diagnostics, key generation and cleanup utilities.
 - Static, known-answer, round-trip, tamper, compatibility, entropy and wordlist tests.

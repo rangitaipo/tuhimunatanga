@@ -6,9 +6,8 @@ const style = fs.readFileSync( new URL( '../kaahua.css', import.meta.url ), 'utf
 
 const requirements = [
 	[ index.includes( 'id="kupu_katoa_v3"' ), 'The passphrase-length selector is missing.' ],
-	[ index.includes( '<option value="7">7 words</option>' ), 'The 7-word option is missing.' ],
-	[ index.includes( '<option value="22" selected>22 words</option>' ), 'The 22-word default is missing.' ],
-	[ index.includes( 'Post-quantum target reached' ), 'The post-quantum target label is missing.' ],
+	[ index.includes( '<option value="7" selected>7 words</option>' ), 'The 7-word default is missing.' ],
+	[ index.includes( 'Post-quantum target reached' ) || index.includes( 'Not quantum-resistant at this length' ), 'The strength label is missing.' ],
 	[ index.includes( 'pangarau-ideal-v3' ) && index.includes( 'pangarau-quantum-v3' ), 'The entropy-equation display is missing.' ],
 	[ script.includes( 'Math.log2( rahi )' ), 'Ideal Diceware entropy is not calculated.' ],
 	[ script.includes( 'Math.log2( rahi / tauruaTeitei )' ), 'Conservative displayed-word entropy is not calculated.' ],

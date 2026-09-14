@@ -78,7 +78,7 @@ function puta( mixed $uara ): string {
 >
 	<section class="wharangi-upoko">
 		<div>
-			<p class="kupu-runga">Tuhimunatanga v3.1.2</p>
+			<p class="kupu-runga">Tuhimunatanga v1.0</p>
 			<h1>Create a secure paste</h1>
 			<p>Encrypt formatted content in this browser. The server receives an authenticated encrypted envelope, never the plaintext or passphrase during normal operation.</p>
 		</div>
@@ -150,7 +150,7 @@ function puta( mixed $uara ): string {
 						<div class="kupuhipa-whiriwhiri">
 							<label id="taitara-kaha-kupuhipa-v3" for="kupu_katoa_v3">Passphrase length</label>
 							<select id="kupu_katoa_v3">
-								<option value="7">7 words</option>
+							<option value="7" selected>7 words</option>
 								<option value="8">8 words</option>
 								<option value="9">9 words</option>
 								<option value="10">10 words</option>
@@ -165,12 +165,12 @@ function puta( mixed $uara ): string {
 								<option value="19">19 words</option>
 								<option value="20">20 words</option>
 								<option value="21">21 words</option>
-								<option value="22" selected>22 words</option>
+							<option value="22">22 words</option>
 							</select>
-							<p>Choose a shorter passphrase for convenience or 22 words to reach the post-quantum strength target.</p>
+							<p>Choose 22 words for the post-quantum strength target. Shorter passphrases are faster but do not resist a large-scale quantum-computer attack.</p>
 						</div>
 						<div class="kupuhipa-kaha-whakarāpopoto">
-							<span id="tohu-kaha-v3" class="tohu-kaha" data-kaha="quantum">Post-quantum target reached</span>
+						<span id="tohu-kaha-v3" class="tohu-kaha" data-kaha="iti">Not quantum-resistant at this length</span>
 							<strong id="tatauranga-kaha-v3">Calculating strength…</strong>
 						</div>
 						<div id="pangarau-kaha-v3" class="kupuhipa-pangarau" aria-live="polite">
@@ -373,7 +373,7 @@ function puta( mixed $uara ): string {
 
 <footer>
 	<div class="takai waewae">
-		<p><strong>Tuhimunatanga v3.1.2</strong></p>
+		<p><strong>Tuhimunatanga v1.0</strong></p>
 		<p>Standalone browser-encrypted paste service.</p>
 	</div>
 </footer>

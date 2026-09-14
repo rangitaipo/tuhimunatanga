@@ -5,14 +5,23 @@ declare( strict_types=1 );
 $ara_kupu = __DIR__ . '/raraunga/7776_kupu.db';
 $ara_haatepe = __DIR__ . '/raraunga/7776_kupu.sha256';
 
+$haatepe_whakarite = is_file( $ara_haatepe )
+	? strtolower( trim( ( string ) file_get_contents( $ara_haatepe ) ) )
+	: '';
+
+if ( preg_match( '/^[0-9a-f]{64}$/D', $haatepe_whakarite ) === 1 ) {
+	$etag_mua = '"' . hash( 'sha256', "v1.0-entry-api\0" . $haatepe_whakarite ) . '"';
+	if ( ( string ) ( $_SERVER[ 'HTTP_IF_NONE_MATCH' ] ?? '' ) === $etag_mua ) {
+		http_response_code( 304 );
+		exit;
+	}
+}
+
 try {
 	if ( !is_file( $ara_kupu ) || !is_readable( $ara_kupu ) ) {
 		throw new RuntimeException( 'The passphrase wordlist could not be read.' );
 	}
 	$haatepe_tūturu = hash_file( 'sha256', $ara_kupu );
-	$haatepe_whakarite = is_file( $ara_haatepe )
-		? strtolower( trim( ( string ) file_get_contents( $ara_haatepe ) ) )
-		: '';
 	if (
 		!is_string( $haatepe_tūturu ) ||
 		preg_match( '/^[0-9a-f]{64}$/D', $haatepe_whakarite ) !== 1 ||
@@ -64,7 +73,7 @@ try {
 	$teitei_kupu = log( 7_776 / $taurua_teitei, 2 );
 	$kupu_katoa = min( 22, max( 7, ( int ) ceil( 256 / $teitei_kupu ) ) );
 
-	$etag = '"' . hash( 'sha256', "v3.1.2-entry-api\0" . $haatepe_tūturu ) . '"';
+	$etag = '"' . hash( 'sha256', "v1.0-entry-api\0" . $haatepe_tūturu ) . '"';
 	if ( ( string ) ( $_SERVER[ 'HTTP_IF_NONE_MATCH' ] ?? '' ) === $etag ) {
 		http_response_code( 304 );
 		exit;

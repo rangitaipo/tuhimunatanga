@@ -1,4 +1,4 @@
-# Tuhimunatanga v3.1.2 deployment guide
+# Tuhimunatanga v1.0 deployment guide
 
 ## Deployment position
 

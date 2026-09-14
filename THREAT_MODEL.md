@@ -1,4 +1,4 @@
-# Tuhimunatanga v3.1.2 threat model
+# Tuhimunatanga v1.0 threat model
 
 ## Scope
 

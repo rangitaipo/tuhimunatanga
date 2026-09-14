@@ -1,6 +1,6 @@
 # Tuhimunatanga
 
-Tuhimunatanga v3.1.2 is a standalone browser-encrypted paste service. It accepts formatted text, sanitises it, encrypts it in the user's browser, and stores only an authenticated encrypted envelope and operational metadata on the server.
+Tuhimunatanga v1.0 is a standalone browser-encrypted paste service. It accepts formatted text, sanitises it, encrypts it in the user's browser, and stores only an authenticated encrypted envelope and operational metadata on the server.
 
 The repository contains plain PHP, JavaScript and CSS. It has no Composer or npm runtime dependencies.
 
@@ -14,7 +14,7 @@ Client-side encryption protects stored content from a database-only compromise. 
 - PBKDF2-SHA-256 with 600,000 iterations and a fresh 16-byte salt.
 - Fresh 12-byte AES-GCM IVs and 128-bit authentication tags.
 - New 22-character base-62 link tokens, with retrieval compatibility for legacy 15-character tokens.
-- Māori Diceware passphrases selectable from 7 to 22 words.
+- Māori Diceware passphrases selectable from 7 to 22 words; the default is 7 words. Passphrases shorter than 22 words do not resist a large-scale quantum-computer attack.
 - Diceware codes displayed beside their corresponding words.
 - Conservative entropy calculations based on duplicate displayed values.
 - Formatted text, tables, colours and a restricted set of inline styles.

@@ -20,4 +20,4 @@ foreach ( $kōnae as $ingoa ) {
 		exit( 1 );
 	}
 }
-echo 'Standalone v3.1.2 file set complete.' . PHP_EOL;
+echo 'Standalone v1.0 file set complete.' . PHP_EOL;
