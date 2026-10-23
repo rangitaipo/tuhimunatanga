@@ -21,7 +21,13 @@ try {
 	if ( !is_file( $ara_kupu ) || !is_readable( $ara_kupu ) ) {
 		throw new RuntimeException( 'The passphrase wordlist could not be read.' );
 	}
-	$haatepe_tūturu = hash_file( 'sha256', $ara_kupu );
+	// Hash the canonical LF form so the checksum survives a checkout that
+	// rewrites line endings. CRLF and LF differ only in transport encoding;
+	// the parsed Diceware rows are identical either way.
+	$raraunga_kupu = file_get_contents( $ara_kupu );
+	$haatepe_tūturu = is_string( $raraunga_kupu )
+		? hash( 'sha256', str_replace( "\r\n", "\n", $raraunga_kupu ) )
+		: '';
 	if (
 		!is_string( $haatepe_tūturu ) ||
 		preg_match( '/^[0-9a-f]{64}$/D', $haatepe_whakarite ) !== 1 ||

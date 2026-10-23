@@ -100,7 +100,10 @@ whakaatu_hua(
 );
 
 if ( is_file( $ara_kupu ) && is_file( $ara_hash ) ) {
-	$hash_tūturu = hash_file( 'sha256', $ara_kupu );
+	$raraunga_kupu = file_get_contents( $ara_kupu );
+	$hash_tūturu = is_string( $raraunga_kupu )
+		? hash( 'sha256', str_replace( "\r\n", "\n", $raraunga_kupu ) )
+		: '';
 	$hash_manako = trim( ( string ) file_get_contents( $ara_hash ) );
 	whakaatu_hua(
 		'Wordlist checksum',
