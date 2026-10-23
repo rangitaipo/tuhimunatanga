@@ -127,7 +127,7 @@ final class Tuhimunatanga {
 
 		$inaianei = time();
 		$wa_ip = $this->tikina_wa_ip();
-		$wa_ip_hash = $this->haatepe_tūmataiti( 'ip', $wa_ip, true );
+		$wa_ip_hash = $this->haatepe_whatunga_ip( $wa_ip );
 		$matua_hash = $this->haatepe_tūmataiti( 'create', $wa_ip, true );
 
 		$waahanga = 'checking the creation rate limit';
@@ -209,7 +209,7 @@ final class Tuhimunatanga {
 		try {
 			$inaianei = time();
 			$wa_ip = $this->tikina_wa_ip();
-			$wa_ip_hash = $this->haatepe_tūmataiti( 'ip', $wa_ip, true );
+			$wa_ip_hash = $this->haatepe_whatunga_ip( $wa_ip );
 			$matua_hash = $this->haatepe_tūmataiti( 'tiro', $wa_ip, true );
 			if ( $this->kua_aukati( 'tiro', $matua_hash, $wa_ip_hash, $inaianei - 3600, 50, 100 ) ) {
 				$this->whakautu_json(
@@ -285,7 +285,7 @@ final class Tuhimunatanga {
 		try {
 			$haatepe = $this->haatepe_rapu( $haatepe_papahono );
 			$wa_ip = $this->tikina_wa_ip();
-			$wa_ip_hash = $this->haatepe_tūmataiti( 'ip', $wa_ip, true );
+			$wa_ip_hash = $this->haatepe_whatunga_ip( $wa_ip );
 			$matua_hash = $this->haatepe_tūmataiti( 'mukua', $wa_ip, true );
 			$inaianei_mukua = time();
 			if ( $this->kua_aukati( 'mukua', $matua_hash, $wa_ip_hash, $inaianei_mukua - 3600, 10, 20 ) ) {
@@ -414,6 +414,13 @@ final class Tuhimunatanga {
 		};
 	}
 
+	/**
+	 * @param string $matua_hash   Identifier for the exact client address.
+	 * @param string $wa_ip_hash   Identifier for the client's /24 or /64 network.
+	 * @param int    $teitei_matua Per-address threshold.
+	 * @param int    $teitei_wa_ip Per-network threshold, which is looser so a
+	 *                             shared network is not limited as one client.
+	 */
 	private function kua_aukati(
 		string $momo,
 		string $matua_hash,
@@ -443,6 +450,37 @@ final class Tuhimunatanga {
 	private function haatepe_tūmataiti( string $momo, string $uara, bool $taahuurua = false ): string {
 		$hua = hash_hmac( 'sha256', $momo . "\0" . $uara, $this->kii_taupaanga, true );
 		return $taahuurua ? $hua : bin2hex( $hua );
+	}
+
+	/**
+	 * The second rate-limit dimension is the client's network, not the exact
+	 * address. Deriving both identifiers from the same address made the two
+	 * thresholds identical, so only the stricter one could ever fire.
+	 */
+	private function haatepe_whatunga_ip( string $wa_ip ): string {
+		return $this->haatepe_tūmataiti( 'ip', self::whatunga_ip( $wa_ip ), true );
+	}
+
+	private static function whatunga_ip( string $ip ): string {
+		if ( filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 ) !== false ) {
+			$wae = explode( '.', $ip );
+			if ( count( $wae ) === 4 ) {
+				return $wae[ 0 ] . '.' . $wae[ 1 ] . '.' . $wae[ 2 ] . '.0/24';
+			}
+			return 'unknown';
+		}
+
+		if ( filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6 ) !== false ) {
+			$p = @inet_pton( $ip );
+			if ( is_string( $p ) && strlen( $p ) === 16 ) {
+				$h = @inet_ntop( substr( $p, 0, 8 ) . str_repeat( "\0", 8 ) );
+				if ( is_string( $h ) ) {
+					return $h . '/64';
+				}
+			}
+		}
+
+		return 'unknown';
 	}
 
 	private function haatepe_hanga_tika( string $haatepe ): bool {
@@ -622,9 +660,99 @@ final class Tuhimunatanga {
 	}
 
 	public static function he_https(): bool {
-		return ( !empty( $_SERVER[ 'HTTPS' ] ) && strtolower( ( string ) $_SERVER[ 'HTTPS' ] ) !== 'off' ) ||
-			( string ) ( $_SERVER[ 'SERVER_PORT' ] ?? '' ) === '443' ||
-			strtolower( ( string ) ( $_SERVER[ 'HTTP_X_FORWARDED_PROTO' ] ?? '' ) ) === 'https';
+		if ( !empty( $_SERVER[ 'HTTPS' ] ) && strtolower( ( string ) $_SERVER[ 'HTTPS' ] ) !== 'off' ) {
+			return true;
+		}
+		if ( ( string ) ( $_SERVER[ 'SERVER_PORT' ] ?? '' ) === '443' ) {
+			return true;
+		}
+		if ( strtolower( ( string ) ( $_SERVER[ 'HTTP_X_FORWARDED_PROTO' ] ?? '' ) ) !== 'https' ) {
+			return false;
+		}
+
+		// X-Forwarded-Proto is caller-controlled unless a reverse proxy
+		// rewrites it, so it only counts when the immediate peer is a
+		// configured proxy.
+		return self::he_poutoko_whirinaki();
+	}
+
+	/** @var array<int,string>|null */
+	private static ?array $poutoko_whirinaki = null;
+
+	private static function he_poutoko_whirinaki(): bool {
+		$wa_ip = ( string ) ( $_SERVER[ 'REMOTE_ADDR' ] ?? '' );
+		if ( $wa_ip === '' ) {
+			return false;
+		}
+
+		foreach ( self::rārangi_poutoko_whirinaki() as $whaanga ) {
+			if ( self::ip_roto_whaanga( $wa_ip, $whaanga ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/** @return array<int,string> */
+	private static function rārangi_poutoko_whirinaki(): array {
+		if ( is_array( self::$poutoko_whirinaki ) ) {
+			return self::$poutoko_whirinaki;
+		}
+
+		$uara = '127.0.0.1/8, ::1';
+		try {
+			$whiringa = WhiringaTuhimunatanga::tikina();
+			$uara = ( string ) ( $whiringa[ 'poutoko_whirinaki' ] ?? $uara );
+		} catch ( Throwable ) {
+			// The configuration may not be loadable yet, for example while
+			// security headers are emitted before the application is built.
+		}
+
+		$hua = [];
+		foreach ( explode( ',', $uara ) as $wāhanga ) {
+			$wāhanga = trim( $wāhanga );
+			if ( $wāhanga !== '' ) {
+				$hua[] = $wāhanga;
+			}
+		}
+
+		self::$poutoko_whirinaki = $hua;
+		return self::$poutoko_whirinaki;
+	}
+
+	private static function ip_roto_whaanga( string $ip, string $whaanga ): bool {
+		$whaanga = trim( $whaanga );
+		if ( $whaanga === '' ) {
+			return false;
+		}
+
+		$wae = strpos( $whaanga, '/' );
+		$papa = $wae === false ? $whaanga : substr( $whaanga, 0, $wae );
+		$roa = $wae === false
+			? ( strpos( $papa, ':' ) === false ? 32 : 128 )
+			: ( int ) substr( $whaanga, $wae + 1 );
+
+		$ip_p = @inet_pton( $ip );
+		$papa_p = @inet_pton( $papa );
+		if ( !is_string( $ip_p ) || !is_string( $papa_p ) || strlen( $ip_p ) !== strlen( $papa_p ) ) {
+			return false;
+		}
+		if ( $roa < 0 || $roa > strlen( $ip_p ) * 8 ) {
+			return false;
+		}
+
+		$tapeke = intdiv( $roa, 8 );
+		$toenga = $roa % 8;
+		if ( $tapeke > 0 && substr( $ip_p, 0, $tapeke ) !== substr( $papa_p, 0, $tapeke ) ) {
+			return false;
+		}
+		if ( $toenga === 0 ) {
+			return true;
+		}
+
+		$uwhi = chr( ( 0xFF << ( 8 - $toenga ) ) & 0xFF );
+		return ( $ip_p[ $tapeke ] & $uwhi ) === ( $papa_p[ $tapeke ] & $uwhi );
 	}
 
 	public function __destruct() {

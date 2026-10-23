@@ -10,5 +10,12 @@ kii_taupaanga = "CHANGE_ME_64_HEX_CHARACTER_APPLICATION_KEY"
 papa_hononga = "https://example.com/tuhimunatanga-v3/"
 rohe_waa = "Pacific/Auckland"
 
+; X-Forwarded-Proto is caller-controlled, so it is only believed when the
+; request arrives from one of these addresses or ranges. Add the reverse
+; proxy here if it does not run on this host. Set to an empty value to never
+; believe the header: requests are then treated as HTTPS only when PHP sees
+; HTTPS=on or server port 443.
+poutoko_whirinaki = "127.0.0.1/8, ::1"
+
 ; Set to 1 temporarily to show the failing server stage and exception.
 patuiro = "0"

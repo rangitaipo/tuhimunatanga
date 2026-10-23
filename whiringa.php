@@ -58,6 +58,10 @@ final class WhiringaTuhimunatanga {
 				'TUHIMUNATANGA_V3_TIMEZONE',
 				$kōnae[ 'rohe_waa' ] ?? 'Pacific/Auckland'
 			),
+			'poutoko_whirinaki' => self::uara(
+				'TUHIMUNATANGA_V3_TRUSTED_PROXIES',
+				$kōnae[ 'poutoko_whirinaki' ] ?? '127.0.0.1/8, ::1'
+			),
 			'patuiro' => in_array(
 				strtolower(
 					self::uara(
