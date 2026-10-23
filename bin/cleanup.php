@@ -2,6 +2,14 @@
 
 declare( strict_types=1 );
 
+// CLI only. As a web request this script has no STDOUT/STDERR constants and
+// would delete rows with nothing but the web-server rules standing in front
+// of it.
+if ( PHP_SAPI !== 'cli' ) {
+	http_response_code( 404 );
+	exit;
+}
+
 require_once( dirname( __DIR__ ) . '/raraunga/raraunga.php' );
 
 try {

@@ -125,29 +125,43 @@ final class Raraunga {
 		return $taauaki->rowCount();
 	}
 
-	/** @return array{matua:int,wa_ip:int} */
+	/**
+	 * Two indexed COUNTs rather than one SUM(CASE) over the whole hour: the
+	 * old shape read every row of the action for every caller, so a flood of
+	 * attempt rows turned each rate-limit check into a scan and amplified the
+	 * attack.
+	 *
+	 * @return array{matua:int,wa_ip:int}
+	 */
 	public function tatau_ngana(
 		string $momo,
 		string $matua_hash,
 		string $wa_ip_hash,
 		int $mai
 	): array {
-		$taauaki = $this->hono()->prepare(
-			'SELECT
-				COALESCE(SUM(CASE WHEN `matua_hash` = :matua_hash THEN 1 ELSE 0 END), 0) AS `matua`,
-				COALESCE(SUM(CASE WHEN `wa_ip_hash` = :wa_ip_hash THEN 1 ELSE 0 END), 0) AS `wa_ip`
-			 FROM `nga_ngana_v3`
-			 WHERE `momo` = :momo AND `waitohuwaa` >= :mai'
+		$pdo = $this->hono();
+
+		$matua = $pdo->prepare(
+			'SELECT COUNT(*) FROM `nga_ngana_v3`
+			 WHERE `momo` = :momo AND `matua_hash` = :uara AND `waitohuwaa` >= :mai'
 		);
-		$taauaki->bindValue( ':matua_hash', $matua_hash, PDO::PARAM_LOB );
-		$taauaki->bindValue( ':wa_ip_hash', $wa_ip_hash, PDO::PARAM_LOB );
-		$taauaki->bindValue( ':momo', $momo, PDO::PARAM_STR );
-		$taauaki->bindValue( ':mai', $mai, PDO::PARAM_INT );
-		$taauaki->execute();
-		$hua = $taauaki->fetch();
+		$matua->bindValue( ':momo', $momo, PDO::PARAM_STR );
+		$matua->bindValue( ':uara', $matua_hash, PDO::PARAM_LOB );
+		$matua->bindValue( ':mai', $mai, PDO::PARAM_INT );
+		$matua->execute();
+
+		$ipa = $pdo->prepare(
+			'SELECT COUNT(*) FROM `nga_ngana_v3`
+			 WHERE `momo` = :momo AND `wa_ip_hash` = :uara AND `waitohuwaa` >= :mai'
+		);
+		$ipa->bindValue( ':momo', $momo, PDO::PARAM_STR );
+		$ipa->bindValue( ':uara', $wa_ip_hash, PDO::PARAM_LOB );
+		$ipa->bindValue( ':mai', $mai, PDO::PARAM_INT );
+		$ipa->execute();
+
 		return [
-			'matua' => ( int ) ( $hua[ 'matua' ] ?? 0 ),
-			'wa_ip' => ( int ) ( $hua[ 'wa_ip' ] ?? 0 ),
+			'matua' => ( int ) $matua->fetchColumn(),
+			'wa_ip' => ( int ) $ipa->fetchColumn(),
 		];
 	}
 

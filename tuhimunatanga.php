@@ -655,6 +655,8 @@ final class Tuhimunatanga {
 		header( 'X-Content-Type-Options: nosniff' );
 		header( 'Referrer-Policy: no-referrer' );
 		header( 'X-Frame-Options: DENY' );
+		header( 'Cross-Origin-Opener-Policy: same-origin' );
+		header( 'Cross-Origin-Resource-Policy: same-origin' );
 		header( 'Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()' );
 		$csp = "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-src 'self'";
 		if ( self::he_https() ) {

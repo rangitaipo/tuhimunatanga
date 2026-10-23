@@ -1,5 +1,13 @@
 -- Tuhimunatanga v3.1.2 database schema.
 -- Import this file into the database named by TUHIMUNATANGA_V3_DB_NAME.
+--
+-- Upgrading an existing installation: the rate-limit lookups are now served by
+-- two covering indexes instead of a scan of the whole hour. Run this once:
+--
+--   ALTER TABLE `nga_ngana_v3`
+--     ADD KEY `idx_ngana_momo_matua` (`momo`, `matua_hash`, `waitohuwaa`),
+--     ADD KEY `idx_ngana_momo_ipa` (`momo`, `wa_ip_hash`, `waitohuwaa`),
+--     DROP KEY `idx_ngana_momo_waitohuwaa`;
 
 CREATE TABLE IF NOT EXISTS `nga_taaurunga_v3` (
     `haatepe` CHAR(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
@@ -21,6 +29,7 @@ CREATE TABLE IF NOT EXISTS `nga_ngana_v3` (
     `wa_ip_hash` BINARY(32) NOT NULL,
     `waitohuwaa` BIGINT UNSIGNED NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `idx_ngana_momo_waitohuwaa` (`momo`, `waitohuwaa`),
+    KEY `idx_ngana_momo_matua` (`momo`, `matua_hash`, `waitohuwaa`),
+    KEY `idx_ngana_momo_ipa` (`momo`, `wa_ip_hash`, `waitohuwaa`),
     KEY `idx_ngana_waitohuwaa` (`waitohuwaa`)
 ) ENGINE=InnoDB DEFAULT CHARACTER SET ascii COLLATE ascii_bin;
