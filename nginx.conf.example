@@ -1,0 +1,108 @@
+# Tuhimunatanga - nginx server block.
+#
+# Apache deployments use .htaccess. Nginx never reads .htaccess, so every rule
+# from that file is reproduced here. Both files can ship in the same tree: each
+# server reads only its own.
+#
+# Replace before use:
+#   your.domain
+#   /var/www/tuhimunatanga
+#   /etc/ssl/certs/... and /etc/ssl/private/...
+#   /run/php/php-fpm.sock
+#
+# Serving under a subpath rather than the domain root: put the TLS server block
+# inside a prefix location and set TUHIMUNATANGA_V3_BASE_URL to the public URL,
+# otherwise generated links fall back to the current script name.
+
+server {
+    listen 80 default_server;
+    server_name _;
+
+    # Pin the redirect target. Using $host here would let a forged Host header
+    # send visitors to a domain of the attacker's choosing.
+    return 301 https://your.domain$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name your.domain;
+
+    root /var/www/tuhimunatanga;
+    index index.php;
+
+    ssl_certificate     /etc/ssl/certs/your.domain.pem;
+    ssl_certificate_key /etc/ssl/private/your.domain.key;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+
+    # Do not advertise the nginx version.
+    server_tokens off;
+
+    # Matches post_max_size = 6M in .user.ini. Nginx defaults to 1m and would
+    # reject a large but valid paste before PHP ever sees it.
+    client_max_body_size 6m;
+
+    # Security headers for every response, static files included. The PHP
+    # location below drops the copies PHP sends for itself, so each response
+    # carries exactly one of each.
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "no-referrer" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()" always;
+    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains" always;
+
+    # Dotfiles: .htaccess, .user.ini, .git. /.well-known stays reachable for ACME.
+    location ~ /\.(?!well-known) {
+        return 404;
+    }
+
+    # Private trees.
+    location ~ ^/(raraunga|bin|tests)(/|$) {
+        return 404;
+    }
+
+    # Private file types.
+    location ~* \.(ini|db|sha256|sql|md|lock|log)$ {
+        return 404;
+    }
+
+    # The Apache rules also block these names outright.
+    location = /VERSION {
+        return 404;
+    }
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    # Regex locations are matched in the order written, so the deny rules above
+    # must stay above this block.
+    location ~ \.php$ {
+        # Never hand a missing script to PHP-FPM.
+        try_files $uri =404;
+
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+
+        # Nginx does not pass X-Forwarded-Proto to PHP by default, and the
+        # application only believes that header from a configured proxy. Pass
+        # HTTPS directly instead: without it PHP treats every request as plain
+        # HTTP and drops the Secure cookie flag, HSTS and the CSP upgrade
+        # directive.
+        fastcgi_param HTTPS $https if_not_empty;
+
+        # PHP emits these itself; drop them so the server-level add_header
+        # values are the only copy. Deliberately not hiding
+        # Content-Security-Policy, which only PHP sets.
+        fastcgi_hide_header X-Content-Type-Options;
+        fastcgi_hide_header Referrer-Policy;
+        fastcgi_hide_header X-Frame-Options;
+        fastcgi_hide_header Permissions-Policy;
+        fastcgi_hide_header Strict-Transport-Security;
+
+        # expose_php is a php.ini setting, so hide the header here instead.
+        fastcgi_hide_header X-Powered-By;
+
+        fastcgi_pass unix:/run/php/php-fpm.sock;
+        # TCP alternative: fastcgi_pass 127.0.0.1:9000;
+    }
+}
