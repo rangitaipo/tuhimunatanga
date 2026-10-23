@@ -3,7 +3,45 @@
 declare( strict_types=1 );
 
 final class WhiringaTuhimunatanga {
-	/** @var array<string,mixed>|null */
+	/**
+	 * Lowest accepted patch release for each PHP branch, keyed by branch id
+	 * (80200 is PHP 8.2). Each value is a security release: an older patch
+	 * level of the same branch is refused even though its branch is newer
+	 * than the floor.
+	 */
+	public const PHP_TAKAI_ITI = [
+		80200 => 80235,
+		80300 => 80336,
+		80400 => 80427,
+		80500 => 80512,
+	];
+
+	public const PHP_TAKAI_ITI_O_KOOTOA = 80235;
+
+	public static function php_he_haumaru(): bool {
+		return self::php_id_he_haumaru( PHP_VERSION_ID );
+	}
+
+	public static function php_id_he_haumaru( int $id ): bool {
+		if ( $id < self::PHP_TAKAI_ITI_O_KOOTOA ) {
+			return false;
+		}
+
+		$wae = intdiv( $id, 100 ) * 100;
+		$iti = self::PHP_TAKAI_ITI[ $wae ] ?? self::PHP_TAKAI_ITI_O_KOOTOA;
+
+		return $id >= $iti;
+	}
+
+	public static function php_karere(): string {
+		return sprintf(
+			'PHP %s is not supported. This release requires PHP 8.2.35 or newer, ' .
+			'and at least 8.3.36, 8.4.27 or 8.5.12 on those branches.',
+			PHP_VERSION
+		);
+	}
+
+	/** @return array<string,mixed>|null */
 	private static ?array $whiringa = null;
 
 	/** @return array<string,mixed> */

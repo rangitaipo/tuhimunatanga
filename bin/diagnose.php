@@ -20,8 +20,12 @@ function whakaatu_hua( string $ingoa, bool $tika, string $karere ): void {
 
 whakaatu_hua(
 	'PHP version',
-	PHP_VERSION_ID >= 80100,
-	PHP_VERSION
+	WhiringaTuhimunatanga::php_he_haumaru(),
+	PHP_VERSION . (
+		WhiringaTuhimunatanga::php_he_haumaru()
+			? ' supported'
+			: ' below the minimum supported release for this branch'
+	)
 );
 
 whakaatu_hua(

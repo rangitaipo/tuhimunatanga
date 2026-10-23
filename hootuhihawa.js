@@ -402,16 +402,25 @@
 		if ( hua === '' || hua.length > 2048 || /[\u0000-\u0020\u007f]/u.test( hua ) ) {
 			return '';
 		}
-		if ( hua.startsWith( '#' ) || hua.startsWith( '/' ) || hua.startsWith( './' ) || hua.startsWith( '../' ) ) {
-			return hua;
-		}
 
+		let hono;
 		try {
-			const hono = new URL( hua, window.location.href );
-			return [ 'http:', 'https:', 'mailto:' ].includes( hono.protocol ) ? hua : '';
+			hono = new URL( hua, window.location.href );
 		} catch ( hapa ) {
 			return '';
 		}
+
+		if ( hono.protocol === 'mailto:' ) {
+			return hua;
+		}
+		if ( hono.protocol !== 'http:' && hono.protocol !== 'https:' ) {
+			return '';
+		}
+
+		// A reference that resolves inside this origin is kept as written. A
+		// protocol-relative value such as //example.test/x resolves off-site,
+		// so it is written out in full instead of looking like a local path.
+		return hono.origin === window.location.origin ? hua : hono.href;
 	}
 
 	function taaruaHuanga( taawai, ma, ingoa ) {

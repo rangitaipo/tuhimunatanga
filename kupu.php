@@ -2,6 +2,21 @@
 
 declare( strict_types=1 );
 
+require_once( __DIR__ . '/whiringa.php' );
+
+if ( !WhiringaTuhimunatanga::php_he_haumaru() ) {
+	error_log( 'Tuhimunatanga v3 refused to serve: ' . WhiringaTuhimunatanga::php_karere() );
+	http_response_code( 500 );
+	header( 'Content-Type: application/json; charset=UTF-8' );
+	header( 'Cache-Control: no-store' );
+	header( 'X-Content-Type-Options: nosniff' );
+	echo json_encode(
+		[ 'ok' => false, 'message' => 'The passphrase wordlist could not be loaded.' ],
+		JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE
+	);
+	exit;
+}
+
 $ara_kupu = __DIR__ . '/raraunga/7776_kupu.db';
 $ara_haatepe = __DIR__ . '/raraunga/7776_kupu.sha256';
 

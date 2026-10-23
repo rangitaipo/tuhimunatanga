@@ -352,7 +352,7 @@ function puta( mixed $uara ): string {
 				id="anga-wetemuna-v3"
 				class="puta-whaihanga"
 				title="Decrypted formatted paste"
-				sandbox
+				sandbox="allow-popups allow-popups-to-escape-sandbox"
 				referrerpolicy="no-referrer"
 			></iframe>
 			<div class="raina-patene">

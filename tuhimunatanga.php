@@ -26,8 +26,8 @@ final class Tuhimunatanga {
 	private array $whiringa;
 
 	public function __construct( ?Raraunga $raraunga = null ) {
-		if ( PHP_VERSION_ID < 80100 ) {
-			throw new RuntimeException( 'PHP 8.1 or newer is required.' );
+		if ( !WhiringaTuhimunatanga::php_he_haumaru() ) {
+			throw new RuntimeException( WhiringaTuhimunatanga::php_karere() );
 		}
 		if ( !extension_loaded( 'pdo_mysql' ) ) {
 			throw new RuntimeException( 'The PHP pdo_mysql extension is required.' );
@@ -83,47 +83,6 @@ final class Tuhimunatanga {
 				400
 			);
 		}
-		if ( !is_string( $kopaki ) || !$this->kopaki_tika( $kopaki, true ) ) {
-			$this->whakautu_json(
-				[ 'ok' => false, 'code' => 'invalid_envelope', 'message' => 'The browser-encrypted envelope is invalid.' ],
-				400
-			);
-		}
-		if ( !is_string( $paunga ) ) {
-			$this->whakautu_json(
-				[ 'ok' => false, 'code' => 'invalid_expiry', 'message' => 'Choose an expiry option.' ],
-				400
-			);
-		}
-
-		[ $waahikee, $panui_kotahi ] = $this->whiriwhiri_paunga( $paunga );
-		if ( $waahikee === false ) {
-			$this->whakautu_json(
-				[ 'ok' => false, 'code' => 'invalid_expiry', 'message' => 'The expiry option is invalid.' ],
-				400
-			);
-		}
-
-		$mukua_hash = null;
-		if ( $panui_kotahi ) {
-			if ( !is_string( $mukua_hash_puutahe64 ) ) {
-				$this->whakautu_json(
-					[ 'ok' => false, 'code' => 'missing_delete_proof', 'message' => 'The one-time deletion proof is missing.' ],
-					400
-				);
-			}
-			try {
-				$mukua_hash = $this->wetewete_puutahe64_url( $mukua_hash_puutahe64 );
-			} catch ( Throwable ) {
-				$mukua_hash = '';
-			}
-			if ( strlen( $mukua_hash ) !== 32 ) {
-				$this->whakautu_json(
-					[ 'ok' => false, 'code' => 'invalid_delete_proof', 'message' => 'The one-time deletion proof is invalid.' ],
-					400
-				);
-			}
-		}
 
 		$inaianei = time();
 		$wa_ip = $this->tikina_wa_ip();
@@ -138,6 +97,52 @@ final class Tuhimunatanga {
 					[ 'ok' => false, 'code' => 'rate_limit', 'message' => 'Too many pastes have been created from this address. Try again later.' ],
 					429
 				);
+			}
+
+			// The rate limit is checked before the envelope is parsed: a
+			// multi-megabyte base64 envelope is the expensive part of this
+			// request, so it must not be reachable ahead of the limiter.
+			if ( !is_string( $kopaki ) || !$this->kopaki_tika( $kopaki, true ) ) {
+				$this->whakautu_json(
+					[ 'ok' => false, 'code' => 'invalid_envelope', 'message' => 'The browser-encrypted envelope is invalid.' ],
+					400
+				);
+			}
+			if ( !is_string( $paunga ) ) {
+				$this->whakautu_json(
+					[ 'ok' => false, 'code' => 'invalid_expiry', 'message' => 'Choose an expiry option.' ],
+					400
+				);
+			}
+
+			$waahanga = 'validating the expiry policy';
+			[ $waahikee, $panui_kotahi ] = $this->whiriwhiri_paunga( $paunga );
+			if ( $waahikee === false ) {
+				$this->whakautu_json(
+					[ 'ok' => false, 'code' => 'invalid_expiry', 'message' => 'The expiry option is invalid.' ],
+					400
+				);
+			}
+
+			$mukua_hash = null;
+			if ( $panui_kotahi ) {
+				if ( !is_string( $mukua_hash_puutahe64 ) ) {
+					$this->whakautu_json(
+						[ 'ok' => false, 'code' => 'missing_delete_proof', 'message' => 'The one-time deletion proof is missing.' ],
+						400
+					);
+				}
+				try {
+					$mukua_hash = $this->wetewete_puutahe64_url( $mukua_hash_puutahe64 );
+				} catch ( Throwable ) {
+					$mukua_hash = '';
+				}
+				if ( strlen( $mukua_hash ) !== 32 ) {
+					$this->whakautu_json(
+						[ 'ok' => false, 'code' => 'invalid_delete_proof', 'message' => 'The one-time deletion proof is invalid.' ],
+						400
+					);
+				}
 			}
 
 			$waahanga = 'hashing the secure-link token';
